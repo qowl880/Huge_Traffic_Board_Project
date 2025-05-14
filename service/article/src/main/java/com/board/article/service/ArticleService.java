@@ -2,6 +2,7 @@ package com.board.article.service;
 
 import com.board.article.domain.dto.request.ArticleCreateRequest;
 import com.board.article.domain.dto.request.ArticleUpdateRequest;
+import com.board.article.domain.dto.response.ArticlePageResponse;
 import com.board.article.domain.dto.response.ArticleResponse;
 import com.board.article.domain.entity.Article;
 import com.board.article.repository.ArticleRepository;
@@ -38,5 +39,19 @@ public class ArticleService {
     @Transactional
     public void delete(Long articleId){
         articleRepository.deleteById(articleId);
+    }
+
+    public ArticlePageResponse readAll(Long boardId, Long page, Long pageSize){
+        return ArticlePageResponse.of(
+                // 페이징 처리
+                articleRepository.findAll(boardId, (page -1) * pageSize, pageSize).stream()         // (page -1) * pageSize : Offset 구하는 공식
+                        .map(ArticleResponse::from)
+                        .toList(),
+                // 전체 페이지 개수
+                articleRepository.count(
+                        boardId,
+                        PageLimitCalculator.calculatePageLimit(page,pageSize,10L)
+                )
+        );
     }
 }

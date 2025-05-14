@@ -2,6 +2,7 @@ package com.board.article.controller;
 
 import com.board.article.domain.dto.request.ArticleCreateRequest;
 import com.board.article.domain.dto.request.ArticleUpdateRequest;
+import com.board.article.domain.dto.response.ArticlePageResponse;
 import com.board.article.domain.dto.response.ArticleResponse;
 import com.board.article.domain.entity.Article;
 import com.board.article.service.ArticleService;
@@ -19,6 +20,15 @@ public class ArticleController {
         return articleService.read(articleId);
     }
 
+    @GetMapping()
+    public ArticlePageResponse readAll(
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("page") Long page,
+            @RequestParam("pageSize") Long pageSize
+    ){
+        return articleService.readAll(boardId, page, pageSize);
+    }
+
     @PostMapping()
     public ArticleResponse create(@RequestBody ArticleCreateRequest request){
         return articleService.create(request);
@@ -33,4 +43,6 @@ public class ArticleController {
     public void delete(@PathVariable Long articleId){
         articleService.delete(articleId);
     }
+
+
 }
