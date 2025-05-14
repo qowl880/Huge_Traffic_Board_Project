@@ -2,6 +2,7 @@ package com.board.article.api.api;
 
 import com.board.article.domain.dto.request.ArticleCreateRequest;
 import com.board.article.domain.dto.request.ArticleUpdateRequest;
+import com.board.article.domain.dto.response.ArticlePageResponse;
 import com.board.article.domain.dto.response.ArticleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,5 +68,18 @@ public class ArticleApiTest {
         restClient.delete()
                 .uri("/api/v1/articles/{articleId}", 121530268440289280L)
                 .retrieve();
+    }
+
+    @Test
+    void readAllTest(){
+        ArticlePageResponse response = restClient.get()
+                .uri("/api/v1/articles?boardId=1&pageSize=30&page=50000")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        System.out.println("Read All Post ResponseCount() =  "+response.articleCount());
+        for(ArticleResponse article : response.articles()){
+            System.out.println("articleId = "+article.articleId());
+        }
     }
 }
