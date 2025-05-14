@@ -11,6 +11,9 @@ import kuke.board.common.snowflake.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -41,6 +44,7 @@ public class ArticleService {
         articleRepository.deleteById(articleId);
     }
 
+    // Paging Covering Index 처리 방식
     public ArticlePageResponse readAll(Long boardId, Long page, Long pageSize){
         return ArticlePageResponse.of(
                 // 페이징 처리
@@ -53,5 +57,14 @@ public class ArticleService {
                         PageLimitCalculator.calculatePageLimit(page,pageSize,10L)
                 )
         );
+    }
+
+    // 무한 스크롤 처리 방식
+    public List<ArticleResponse> readAllInfiniteScroll(Long boardId, Long pageSize, Long lastArticleId){
+        List<Article> articles = lastArticleId == null ?
+                articleRepository.findAllInfiniteScroll(boardId, pageSize) :
+                articleRepository.findAllInfiniteScroll(boardId, pageSize, lastArticleId);
+
+        return articles.stream().map(ArticleResponse::from).toList();
     }
 }

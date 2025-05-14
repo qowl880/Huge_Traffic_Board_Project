@@ -9,6 +9,8 @@ import com.board.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/articles")
 @RequiredArgsConstructor
@@ -27,6 +29,15 @@ public class ArticleController {
             @RequestParam("pageSize") Long pageSize
     ){
         return articleService.readAll(boardId, page, pageSize);
+    }
+
+    @GetMapping("/infinite-scroll")
+    public List<ArticleResponse> readAllInfiniteScroll(
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("pageSize") Long pageSize,
+            @RequestParam(value = "lastArticleId", required = false) Long lastArticleId
+    ){
+        return  articleService.readAllInfiniteScroll(boardId, pageSize, lastArticleId);
     }
 
     @PostMapping()
