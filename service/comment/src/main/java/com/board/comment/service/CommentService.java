@@ -5,7 +5,7 @@ import com.board.comment.domain.dto.response.CommentResponse;
 import com.board.comment.domain.entity.Comment;
 import com.board.comment.repository.CommentRepository;
 import jakarta.transaction.Transactional;
-import kuke.board.common.snowflake.Snowflake;
+import com.board.common.snowflake.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -7,12 +7,11 @@ import com.board.article.domain.dto.response.ArticleResponse;
 import com.board.article.domain.entity.Article;
 import com.board.article.repository.ArticleRepository;
 import jakarta.transaction.Transactional;
-import kuke.board.common.snowflake.Snowflake;
+import com.board.common.snowflake.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
