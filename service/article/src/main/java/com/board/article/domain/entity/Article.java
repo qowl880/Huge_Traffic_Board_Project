@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "is_deleted = false")
 public class Article {
     @Id
     private Long articleId;
