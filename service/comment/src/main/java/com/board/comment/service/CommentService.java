@@ -88,7 +88,7 @@ public class CommentService {
             // 대댓글의 부모 댓글 Id값을 통해 부모 Comment 객체를 가져와
             commentRepository.findById(comment.getParentCommentId())
                     // 해당 객체의 삭제 상태가 true (삭제됨) 이고
-                    .filter(Comment::isDeleted)
+//                    .filter(Comment::isDeleted)
                     // 해당 객체의 대댓글이 없다면
                     .filter(not(this::hasChildren))
                     // 해당 객체 완전 삭제함
